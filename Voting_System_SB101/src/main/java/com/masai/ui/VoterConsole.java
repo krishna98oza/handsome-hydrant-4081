@@ -26,66 +26,66 @@ public class VoterConsole {
     public void createVoterAccount() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Enter Voter Email:");
+        System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Email:", ConsoleFormatter.YELLOW));
         String email = scanner.nextLine();
 
-        System.out.println("Enter Voter Password:");
+        System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Password:", ConsoleFormatter.YELLOW));
         String password = scanner.nextLine();
 
-        System.out.println("Enter Voter Name:");
+        System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Name:", ConsoleFormatter.YELLOW));
         String name = scanner.nextLine();
 
-        System.out.println("Enter Voter Age:");
+        System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Age:", ConsoleFormatter.YELLOW));
         int age = scanner.nextInt();
         scanner.nextLine(); // Clear the newline character
 
         if (age < 18) {
-            System.out.println("Your age is below 18. You are not eligible to vote.");
+            System.out.println(ConsoleFormatter.applyBorderColor("Your age is below 18. You are not eligible to vote.", ConsoleFormatter.YELLOW));
         } else {
             Voter newVoter = new Voter(email, password, name, age);
             voterService.createVoterAccount(newVoter);
-            System.out.println("Voter account created successfully!");
+            System.out.println(ConsoleFormatter.applyBorderColor("Voter account created successfully!", ConsoleFormatter.YELLOW));
         }
     }
     
     public void startVoterConsole() {
-    	 System.out.println("Voter Account - Login");
+    	 System.out.println(ConsoleFormatter.applyBorderColor("Voter Account - Login", ConsoleFormatter.YELLOW));
 
     	    Scanner scanner = new Scanner(System.in);
-    	    System.out.println("Enter Voter Email:");
+    	    System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Email:", ConsoleFormatter.YELLOW));
     	    String email = scanner.nextLine();
 
-    	    System.out.println("Enter Voter Password:");
+    	    System.out.println(ConsoleFormatter.applyBorderColor("Enter Voter Password:", ConsoleFormatter.YELLOW));
     	    String password = scanner.nextLine();
 
     	    // Check if the voter account exists in the database
     	    Voter voter = voterService.getVoterByEmail(email);
     	    if (voter != null && voter.getPassword().equals(password)) {
-    	        System.out.println("Voter login successful!");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("Voter login successful!", ConsoleFormatter.YELLOW));
     	        loggedInVoter = voter;
     	        voterConsoleOptions();
     	    } else {
-    	        System.out.println("Invalid credentials. Voter login failed!");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("Invalid credentials. Voter login failed!", ConsoleFormatter.YELLOW));
     	    }
     }
     public void voterConsoleOptions() {
         if (loggedInVoter == null) {
-            System.out.println("Please login as a voter first.");
+            System.out.println(ConsoleFormatter.applyBorderColor("Please login as a voter first.", ConsoleFormatter.YELLOW));
             return;
         }
-        System.out.println("Welcome "+loggedInVoter.getName()+" to your Voting Account" );
+        System.out.println(ConsoleFormatter.applyBorderColor("Welcome "+loggedInVoter.getName()+" to your Voting Account", ConsoleFormatter.YELLOW));
 
         boolean exit = false;
         while (!exit) {
         	System.out.println();
-        	System.out.println("+-----------------------------+");
-            System.out.println("| Please choose an option:    |");
-            System.out.println("| 1. View Candidate Profiles  |");
-            System.out.println("| 2. Vote for a Candidate     |");
-            System.out.println("| 3. View Voting History      |");
-            System.out.println("| 4. Change Password          |");
-            System.out.println("| 5. Exit                     |");
-            System.out.println("+-----------------------------+");
+        	System.out.println(ConsoleFormatter.applyBorderTop("", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" Please choose an option:         ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" 1. View Candidate Profiles       ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" 2. Vote for a Candidate          ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" 3. View Voting History           ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" 4. Change Password               ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderLine(" 5. Exit                          ", ConsoleFormatter.GREEN));
+            System.out.println(ConsoleFormatter.applyBorderBottom("", ConsoleFormatter.GREEN));
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
@@ -107,20 +107,20 @@ public class VoterConsole {
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println(ConsoleFormatter.applyBorderColor("Invalid choice. Please try again.", ConsoleFormatter.YELLOW));
             }
         }
 
-        System.out.println("Exiting Voter Account...");
+        System.out.println(ConsoleFormatter.applyBorderColor("Exiting Voter Account...", ConsoleFormatter.YELLOW));
     }
 
 
 	private static void viewCandidateProfiles() {
 		List<Candidate> candidates = CandidateService.getAllCandidates();
 	    if (candidates.isEmpty()) {
-	        System.out.println("No candidates found.");
+	        System.out.println(ConsoleFormatter.applyBorderColor("No candidates found.", ConsoleFormatter.YELLOW));
 	    } else {
-	        System.out.println("Available Candidates:");
+	        System.out.println(ConsoleFormatter.applyBorderColor("Available Candidates:", ConsoleFormatter.YELLOW));
 	        for (Candidate candidate : candidates) {
 	            System.out.println(candidate);
 	        }
@@ -129,23 +129,23 @@ public class VoterConsole {
 
     private void voteForCandidate() {
     	 if (loggedInVoter == null) {
-    	        System.out.println("Please login as a voter first.");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("Please login as a voter first.", ConsoleFormatter.YELLOW));
     	        return;
     	    }
 
     	    viewCandidateProfiles();
     	    
     	    Scanner scanner = new Scanner(System.in);
-    	    System.out.println("Enter Candidate ID to Vote:");
+    	    System.out.println(ConsoleFormatter.applyBorderColor("Enter Candidate ID to Vote:", ConsoleFormatter.YELLOW));
     	    int candidateId = scanner.nextInt();
     	    scanner.nextLine();
     	    
     	    Candidate candidate = CandidateService.getCandidateById(candidateId);
 
     	    if (candidate == null) {
-    	        System.out.println("Invalid Candidate ID. Voting failed.");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("Invalid Candidate ID. Voting failed.", ConsoleFormatter.YELLOW));
     	    } else if (loggedInVoter.isHasVoted()) {
-    	        System.out.println("You have already voted. You cannot vote again.");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("You have already voted. You cannot vote again.", ConsoleFormatter.YELLOW));
     	    } else {
     	        // Update the voter's hasVoted status to true
     	        loggedInVoter.setHasVoted(true);
@@ -155,48 +155,48 @@ public class VoterConsole {
     	        candidate.setVoteCount(candidate.getVoteCount() + 1);
     	        CandidateService.updateCandidate(candidate);
 
-    	        System.out.println("Vote casted successfully! Thank you for voting.");
+    	        System.out.println(ConsoleFormatter.applyBorderColor("Vote casted successfully! Thank you for voting.", ConsoleFormatter.YELLOW));
     	    }
     }
 
    public void viewVotingHistory() {
     if (loggedInVoter == null) {
-        System.out.println("Please login as a voter first.");
+        System.out.println(ConsoleFormatter.applyBorderColor("Please login as a voter first.", ConsoleFormatter.YELLOW));
         return;
     }
 
-    System.out.println("Your Voting History:");
+    System.out.println(ConsoleFormatter.applyBorderColor("Your Voting History:", ConsoleFormatter.YELLOW));
     List<Vote> votingHistory = voterService.getVotingHistory(loggedInVoter);
     if (votingHistory.isEmpty()) {
-        System.out.println("You have not voted in any election yet.");
+        System.out.println(ConsoleFormatter.applyBorderColor("You have not voted in any election yet.", ConsoleFormatter.YELLOW));
     } else {
         for (Vote vote : votingHistory) {
             Candidate candidate = CandidateService.getCandidateById(vote.getCandidateId());
-            System.out.println("Election ID: " + vote.getElectionId() + ", Voted for: " + candidate.getName());
+            System.out.println(ConsoleFormatter.applyBorderColor("Election ID: " + vote.getElectionId() + ", Voted for: " + candidate.getName(), ConsoleFormatter.CYAN));
         }
     }
 }
     
     private void ChangePassword() {
     	if (loggedInVoter == null) {
-            System.out.println("Please login as a voter first.");
+            System.out.println(ConsoleFormatter.applyBorderColor("Please login as a voter first.", ConsoleFormatter.YELLOW));
             return;
         }
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Old Password:");
+        System.out.println(ConsoleFormatter.applyBorderColor("Enter Old Password:", ConsoleFormatter.CYAN));
         String oldPassword = scanner.nextLine();
 
         if (!oldPassword.equals(loggedInVoter.getPassword())) {
-            System.out.println("Incorrect old password. Password change failed.");
+            System.out.println(ConsoleFormatter.applyBorderColor("Incorrect old password. Password change failed.", ConsoleFormatter.YELLOW));
         } else {
-            System.out.println("Enter New Password:");
+            System.out.println(ConsoleFormatter.applyBorderColor("Enter New Password:", ConsoleFormatter.CYAN));
             String newPassword = scanner.nextLine();
 
             loggedInVoter.setPassword(newPassword);
             voterService.updateVoter(loggedInVoter);
 
-            System.out.println("Password changed successfully.");
+            System.out.println(ConsoleFormatter.applyBorderColor("Password changed successfully.", ConsoleFormatter.CYAN));
         }
 		
 	}

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to the Voting System!");
+        System.out.println(ConsoleFormatter.applyBorderColor("Welcome to the Voting System!", ConsoleFormatter.YELLOW));
         
         CandidateDAO candidateDAO = new CandidateDAOImpl();
         VoterDAO voterDAO = new VoterDAOImpl();
@@ -28,12 +28,13 @@ public class Main {
 
         boolean exit = false;
         while (!exit) {
-        	 System.out.println(ConsoleFormatter.applyBorder("Please choose an option:", ConsoleFormatter.GREEN));
-             System.out.println(ConsoleFormatter.applyBorder("1. Administrator Login", ConsoleFormatter.GREEN));
-             System.out.println(ConsoleFormatter.applyBorder("2. Voter Account Create", ConsoleFormatter.GREEN));
-             System.out.println(ConsoleFormatter.applyBorder("3. Voter Login", ConsoleFormatter.GREEN));
-             System.out.println(ConsoleFormatter.applyBorder("4. Exit", ConsoleFormatter.GREEN));
-
+        	 System.out.println(ConsoleFormatter.applyBorderTop("", ConsoleFormatter.GREEN));
+        	 System.out.println(ConsoleFormatter.applyBorderLine(" Please choose an option:         ", ConsoleFormatter.GREEN));
+             System.out.println(ConsoleFormatter.applyBorderLine(" 1. Administrator Login           ", ConsoleFormatter.GREEN));
+             System.out.println(ConsoleFormatter.applyBorderLine(" 2. Voter Account Create          ", ConsoleFormatter.GREEN));
+             System.out.println(ConsoleFormatter.applyBorderLine(" 3. Voter Login                   ", ConsoleFormatter.GREEN));
+             System.out.println(ConsoleFormatter.applyBorderLine(" 4. Exit                          ", ConsoleFormatter.GREEN));
+             System.out.println(ConsoleFormatter.applyBorderBottom("", ConsoleFormatter.GREEN));
 
             int choice = scanner.nextInt();
             scanner.nextLine(); // Clear the newline character
@@ -52,11 +53,11 @@ public class Main {
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println(ConsoleFormatter.applyBorderColor("Invalid choice. Please try again.", ConsoleFormatter.RED));
             }
         }
 
-        System.out.println("Exiting Voting System...");
+        System.out.println(ConsoleFormatter.applyBorderColor("Exiting Voting System...", ConsoleFormatter.YELLOW));
         scanner.close();
     }
 }
